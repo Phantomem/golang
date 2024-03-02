@@ -30,7 +30,7 @@ func getJson(url string, target interface{}) error {
 	if err != nil {
 		return err
 	}
-	defer r.Body.Close()
+	defer r.Body.Close() // defers execution of this until surrounding functions returns
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return err
@@ -41,7 +41,6 @@ func getJson(url string, target interface{}) error {
 func listAlbums(c *gin.Context) {
 	limit := parseInt(c.DefaultQuery("limit", "10"))
 	page := parseInt(c.DefaultQuery("page", "0"))
-	log.Print(limit, page)
 	albums := []Album{}
 	err := getJson("https://jsonplaceholder.typicode.com/albums", &albums)
 	if err != nil {
